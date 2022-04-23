@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Обратная связь {% endblock %}
+
+{% block image_block %}
+<header class="info-header">
+  <div id="page-intro" class="container-fluid d-flex align-items-center justify-content-center ">
+    <div class="row d-flex justify-content-center text-center">
+      <div class="col-md-10 text-white">
+        <!-- heading -->
+        <h2 class="display-4 font-weight-bold  p-5 " style="color:#ff5722;" > Связь с нами/Обратная связь </h2>
+        <div class="row d-flex justify-content-center text-center">
+          <ul class="breadcrumb">
+            <li><a href="{% url 'index' %}">Главная</a></li>
+            <li class="disabled-text" >Обратная связь</li>
+          </ul>
+        </div>
+
+        <!-- divider -->
+        <hr style="color:#ff5722;">
+
+        <!-- description -->
+        <h4 class="white-text my-4">Пишите нам по любым вопросам!</h4>
+  </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<section class="text-center mt-5">
+              <h2 class="mb-5 font-weight-bold" style="color:#ff5722;">Чем мы могли бы вам помочь?</h2>
+              <!-- class row for description-->
+              <div class="row d-flex justify-content-center mb-4">
+                <!-- class column -->
+                <div class="col-md-8">
+                  <p class="grey-text">Вы можете написать нам по любому интересующему вас вопросу: от обучения до сотрудничества.</p>
+                </div>
+              </div>
+</section>
+             
+
+
+          
+<div class=" col-10 contact-form  my-1  container-fluid ">
+  <form method="post">
+      {% csrf_token %}
+
+
+      <div class="row ">
+          <div class="col-md-12 justify-content-center container ">
+              <div class="form-group ">
+                  <input type="text" name="name" class="form-control" placeholder="Ваше имя *" value="" required/>
+              </div>
+              <div class="form-group">
+                  <input type="email" name="email" class="form-control" placeholder="Почта *" value="" required/>
+              </div>
+              <div class="form-group">
+                  <input type="tel" name="phone" class="form-control" placeholder="Номер телефона *" value="" required />
+              </div>
+              <div class="form-group">
+                <textarea name="subject" class="form-control" required placeholder="Опишите примерно какая у вас задача *" style="width: 100%; height: 150px;"></textarea>
+            </div>
+              <div class="form-group my-3">
+                  <input type="submit" name="btnSubmit" class="btnContact btn btn-primary" value="Отправить" />
+              </div>
+          </div>
+         
+      </div>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block title %} Заметки {% endblock %}
+{% block content %}
+{%  load crispy_forms_tags %}
+
+<header class="info-header">
+    <div id="page-intro" class="container-fluid d-flex align-items-center justify-content-center ">
+      <div class="row d-flex justify-content-center text-center">
+        <div class="col-md-10 text-white">
+     
+          <h2 class="display-4 font-weight-bold  p-5 " style="color:#ff5722;" >Оставляйте заметки по пройденному материалу!</h2>
+          <div class="row d-flex justify-content-center text-center">
+            <ul class="breadcrumb">
+              <li><a href="{% url 'index' %}">Главная</a></li>
+              <li><a href="{% url 'educate_portal:standard_list' %}">Образовательный портал</a></li>
+              
+              <li class="disabled-text" >заметки</li>
+            </ul>
+          </div>
+  
+   
+          <hr style="color:#ff5722;">
+  
+    
+          <h4 class="white-text my-4">Вы всегда можете вернуться к своей заметке и все вспомнить!</h4>
+    </div>
+  </header>
+
+<div class="container">
+    <div class="row">
+        {% for note in notes %} 
+        <div class="col-md-3">
+            <a href="{% url 'educate_portal:notes-detail' note.id %}">
+                <div class="card">
+                    <div class="card-header">{{note.title}}</div>
+                    <div class="card-body">{{note.description|slice:"0:100"}}</div>
+                    <div class="card-footer mt-auto "><a class='text-danger' href="{% url 'educate_portal:delete-note' note.id %}">
+                        <span class="">Удалить заметку</span></a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <br><br>
+        {% endfor %}
+    </div>
+</div>
+<br><br>
+<div class="container">
+    <form method="POST">
+      {% csrf_token %}  
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Создать заметку</legend>
+        </fieldset>
+        {{form|crispy}}
+        <div class="form-group">
+            <button href="" class="btn btn-outline-info" type="submit">
+                Создать заметку
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

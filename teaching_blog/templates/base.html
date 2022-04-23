@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>{%block title%}{%endblock%}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+ 
+ 
+ 
+    <link rel="stylesheet" href="{% static 'css/master_css.css' %}">
+
+  </head>
+  <body>
+
+
+
+ 
+      <header>
+      
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+       
+          <div class="container-fluid">
+  
+            <a class="navbar-brand" href="{% url 'index' %}">Портал для студентов</a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+              <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'educate_portal:standard_list' %}">Образовательный портал</a>
+               </li>
+               <li class="nav-item">
+                <a class="nav-link" href="{% url 'educate_portal:contact' %}">Связь с нами</a>
+             </li>
+             {% if user.is_superuser %}
+             <li class="nav-item ">
+                <a class="nav-link" href="{% url 'admin:index' %}">Панель администратора</span> </a>
+             </li>
+             {%endif%}
+    
+                {% if user.is_authenticated %} 
+    
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'educate_portal:profile' %}">Профиль</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    полезные функции
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'educate_portal:books' %}">Поиск литературы</a>
+                    <a class="dropdown-item" href="{% url 'educate_portal:wiki' %}">Поиск по википедии</a>
+                    <div class="dropdown-divider"></div>
+    
+  
+      
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'educate_portal:todo' %}">заметки/записи</a>
+                    <a class="dropdown-item" href="{% url 'educate_portal:homework' %}">Планировщик обучения</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'educate_portal:notes' %}">Заметки</a>
+
+                
+                    <div class="dropdown-divider"></div>
+                  </div>
+                </li>
+    
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'user_logout' %}">Выйти</a>
+                </li>
+                {% else %}
+    
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'user_login' %}">Авторизация</a>
+                </li>
+                {% endif %}
+              </ul>
+     
+          </div>
+        </div>
+        </nav>
+      </header>
+ 
+    <!-- navigation bar -->
+       
+    <main>
+      {% block image_block %}
+      {% endblock %}
+      {% if messages  %}
+      {% for msg in messages %}
+      <div class ='alert alert - {{msg.tags}}'>{{msg}}</div>
+      {% endfor %}
+      {% endif %}
+          {% block content %}
+          {% endblock content %}
+      
+        </main>
+ 
+
+    <footer><!--футер сайта   -->
+      <p>Связь с нами</p>
+   
+   <div class="socialIcons"> <!-- иконки соц сетей -->
+       <a href="https://vk.com/i_cant_give_up" target="_blank"><img src="{% static 'images/VK-Icon_22013.ico' %}"   alt=""></a> 
+      <a href="https://join.skype.com/invite/mDa1CK8Hn9cD"target="_blank" ><img src="{% static 'images/Skype-Icon_22025.ico' %}"  alt=""></a>
+      <a href="https://www.youtube.com/channel/UCA6WssVVOv_xSB-PdQ7vYYA"target="_blank"><img src="{% static 'images/Youtube-Icon_22119.ico' %}"  alt=""></a>
+      <a href="https://www.twitch.tv/valeron_pervyi" target="_blank"><img src="{% static 'images/twitch_icon_146081 (1).ico' %}" alt=""></a> 
+      
+       
+   </div><br>
+   <p>Copyright &copy; Your Website 2022</p>
+    <div class=phone>Если есть вопросы, свяжитесь с нами:<a class="btn btn-primary" href="tel:+79243020791">+7 (4212) 92-95-05 </a></div>
+   <p>Хабаровск
+      680021, ул. Синельникова д. 20</p>
+   <p>По всем вопросам пишите нам на<a class="btn btn-primary" href="mailto:sales@tehprime.com">  почту </a>  <br>или оставляйте<a class="btn btn-primary" href="{% url 'educate_portal:contact' %}">заявку</a> на нашем сайте</p> <br>
+       </footer>
+       
+       
+       <style>
+  
+          footer{ /* настраиваем весь футер */ 
+              width: 100%;
+              height: auto;
+              background:#212529;
+              margin: 0	auto;
+              text-align: center;
+              padding-top: 25px;
+             color:white;
+              font-size: 18px;	 
+          }
+          footer a{ /* стили ссылок футера*/ 	
+              font-size: 20px;
+              margin-left: 20px; 
+              text-decoration: none !important;
+              border: none !important 
+          }
+          .socialIcons img:hover{ /* эффекты при наведении на иконки соц сетей */ 
+              background: red;
+              border-radius:90%; 
+          } 
+          
+       </style>
+      </body>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+ 
+</html>

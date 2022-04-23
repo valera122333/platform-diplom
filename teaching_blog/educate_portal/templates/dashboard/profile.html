@@ -1,0 +1,129 @@
+{% extends 'base.html' %} 
+ {% load static %}
+{% load crispy_forms_tags%}
+{% block title %} Профиль {% endblock %}
+{% block content %}
+
+ 
+ 
+<header class="info-header">
+    <div id="page-intro" class="container-fluid d-flex align-items-center justify-content-center ">
+      <div class="row d-flex justify-content-center text-center">
+        <div class="col-md-10 text-white">
+     
+          <h2 class="display-4 font-weight-bold  p-5 " style="color:#ff5722;" >Ваш профиль пользователя {{request.user.username }}</h2>
+          <div class="row d-flex justify-content-center text-center">
+            <ul class="breadcrumb">
+              <li><a href="{% url 'index' %}">Главная</a></li>
+              <li><a href="{% url 'educate_portal:standard_list' %}">Образовательный портал</a></li>
+              
+              <li class="disabled-text" >профиль пользователя {{request.user.username }}</li>
+            </ul>
+          </div>
+  
+   
+          <hr style="color:#ff5722;">
+  
+    
+          <h4 class="white-text my-4">Быстрый доступ к заметкам и планированию обучения доступны прямо с профиля!</h4>
+    </div>
+  </header>
+ 
+ 
+ 
+<section class="text-center">
+ 
+    <div class="container">
+        {% if not todos_done %} 
+
+        <h2>Планировщик</h2>
+        <table class="table table-striped table-bordered table-hover table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Заголовок</th>
+                    <th scope="col">Статус выполнения</th>
+                    <th scope="col">Удаление</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in todos %} 
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{todo.title}}</td>
+                    <td>
+                        <a href="{% url 'educate_portal:update-todo' todo.id  %}">
+                            <div class="form-check">
+                                {% if todo.is_finished == True %} 
+                                <input class="form-check-input" type="checkbox" value="" checked>
+                                {% else %}
+                                <input class="form-check-input" type="checkbox" value="" >
+                                {% endif %}
+                                <label class="form-check-label text-light" for="flexCheckDefault">
+                                    Выполнено
+                                </label>
+                            </div>
+                        </a>
+                    </td>
+
+                    <td><a class ='text-danger' href="{% url 'educate_portal:delete-todo' todo.id %}">Удалить </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <h3>У вас еще нет заметок! </h3>
+        {% endif %}
+        <a href="{% url 'educate_portal:todo' %}" class="btn btn-danger">Напоминания/заметки</a>
+        <br><br>
+
+{% if not homework_done %} 
+        <h2>Задания</h2>
+        <table class="table table-striped table-bordered table-hover table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Предмет</th>
+                <th scope="col">Заголовок урока</th>
+                <th scope="col">Описание</th>
+                <th scope="col">Время</th>
+                <th scope="col">Статус выполнения</th>
+                <th scope="col">Удаление</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for homework in homeworks %} 
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                <td>{{homework.subject}}</td>
+                <td>{{homework.title}}</td>
+                <td>{{homework.description}}</td>
+                <td>{{homework.time_lesson}}</td>
+
+                    <td>
+                        <a href="{% url 'educate_portal:update-homework' homework.id %}">
+                            <div class="form-check">
+                                {% if homework.is_finished == True %} 
+                                <input class="form-check-input" type="checkbox" value="" checked >
+                                {%else%}
+                                <input class="form-check-input" type="checkbox" value=""  >
+                                {% endif %}
+                                <label class="form-check-label text-light" for="flexCheckDefault">
+                                    Выполнено
+                                </label>
+                            </div>
+                        </a>
+                    </td>
+                    <td ><a class ='text-danger' href="{% url 'educate_portal:delete-homework' homework.id %}">Удалить</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {%else%}
+        <h3>У вас еще нет планирования обучения, создайте свое первое планирование!</h3>
+        {% endif %}
+        <a href="{% url 'educate_portal:homework' %}" class="btn btn-danger">Планировщик обучения</a>
+    </div>
+</section>
+
+{% endblock content %}
