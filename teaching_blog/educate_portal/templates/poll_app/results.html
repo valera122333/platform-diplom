@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Результаты опроса{% endblock %}
+{% block image_block %}
+  <header class="info-header">
+    <div id="page-intro" class="container-fluid d-flex align-items-center justify-content-center ">
+      <div class="row d-flex justify-content-center text-center">
+        <div class="col-12 text-white">
+          <!-- heading -->
+          <h2 class="display-4 font-weight-bold  p-5 " style="color:#ff5722;" > Результаты опроса  </h2>
+          <div class="row d-flex justify-content-center text-center">
+            <ul class="breadcrumb">
+              <li><a href="{% url 'index' %}">Главная</a></li>
+              <li><a href="{% url 'educate_portal:standard_list' %}">Образовательный портал</a></li>
+              <li><a href="{% url 'educate_portal:home_poll' %}">Опросы</a></li>
+              <li><a href="{% url 'educate_portal:vote_poll' poll.id %}">Текущий опрос</a></li>
+             
+            </ul>
+          </div>
+
+          <!-- divider -->
+          <hr style="color:#ff5722;">
+
+          <!-- description -->
+          <h4 class="white-text my-4">На данной странице вы видите варианты голосования и количество проголосовавших</h4>
+    </div>
+  </header>
+  {% endblock %}
+{% block content %}
+<div class="row col-12 mb-3">
+    <div class="col-lg-8 col-lg-offset-2 container-fluid mb-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center mt-3">Результат опроса по вопросу</h3>
+            </div>
+
+            <div class="panel-body text-center">
+                <h3>  {{poll.question}}</h3>
+            </div>
+
+            <ul class="list-group">
+                <li class="list-group-item">{{poll.option_one}} &mdash; <strong>{{poll.option_one_count}}</strong></li>
+                <li class="list-group-item">{{poll.option_two}} &mdash; <strong>{{poll.option_two_count}}</strong></li>
+                <li class="list-group-item">{{poll.option_three}} &mdash; <strong>{{poll.option_three_count}}</strong></li>
+                <li class="list-group-item"> Итого &mdash; <strong>{{poll.total}}</strong></li>
+            </ul>
+
+        
+
+        </div>
+    </div>
+</div>
+<style>
+ 
+</style>
+
+{% endblock %}

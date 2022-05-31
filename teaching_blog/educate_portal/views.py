@@ -3,12 +3,11 @@ from django.views.generic import (TemplateView, DetailView,
                                   ListView, CreateView,
                                   UpdateView, DeleteView, FormView,)
 
-from app_users.models import UserProfileInfo
 
-from .models import Homework, Notes, Standard, Subject, Lesson, Todo, Contact
+from .models import Homework, Notes, Standard, Subject, Lesson, Todo, Contact, Poll
 from django.urls import reverse_lazy
-from .forms import CommentForm, DashboardForm, HomeworkForm, NotesForm, ReplyForm, LessonForm, TodoForm
-from django.http import HttpResponseRedirect
+from .forms import CommentForm, DashboardForm, HomeworkForm, NotesForm, ReplyForm, LessonForm, TodoForm, CreatePollForm
+from django.http import HttpResponse, HttpResponseRedirect
 # фишки
 
 import requests
@@ -121,7 +120,8 @@ class LessonCreateView(CreateView):
 
 
 class LessonUpdateView(UpdateView):
-    fields = ('name', 'position', 'video', 'ppt', 'Notes')
+    fields = ('name', 'position', 'description',
+              'description2', 'video', 'ppt', 'Notes')
     model = Lesson
     template_name = 'educate_portal/lesson_update.html'
     context_object_name = 'lessons'
@@ -372,3 +372,58 @@ def contact(request):
         contact.save()
         return redirect('/', f"Добавилась новая заявка! ")
     return render(request, 'dashboard/contact.html')
+
+
+def home_poll(request):
+    polls = Poll.objects.all()
+    context = {
+        'polls': polls
+    }
+    return render(request, 'poll_app/home.html', context)
+
+
+def create_poll(request):
+    if request.method == 'POST':
+        form = CreatePollForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('educate_portal:home_poll')
+    else:
+        form = CreatePollForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'poll_app/create.html', context)
+
+
+def vote_poll(request, poll_id):
+    poll = Poll.objects.get(pk=poll_id)
+
+    if request.method == 'POST':
+
+        selected_option = request.POST['poll']
+        if selected_option == 'option1':
+            poll.option_one_count += 1
+        elif selected_option == 'option2':
+            poll.option_two_count += 1
+        elif selected_option == 'option3':
+            poll.option_three_count += 1
+        else:
+            return HttpResponse(400, 'ошибка')
+
+        poll.save()
+
+        return redirect('educate_portal:results_poll', poll.id)
+
+    context = {
+        'poll': poll
+    }
+    return render(request, 'poll_app/vote.html', context)
+
+
+def results_poll(request, poll_id):
+    poll = Poll.objects.get(pk=poll_id)
+    context = {
+        'poll': poll
+    }
+    return render(request, 'poll_app/results.html', context)

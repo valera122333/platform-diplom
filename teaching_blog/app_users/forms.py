@@ -1,4 +1,5 @@
 from tabnanny import verbose
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -26,21 +27,20 @@ class UserForm(UserCreationForm):
 
 
 class UserProfileInfoForm(forms.ModelForm):
-    bio = forms.CharField(required=False)
-
-    teacher = 'teacher'
-    student = 'student'
-
-    user_types = [
-        (student, 'Студент'),
-        (teacher, 'Учитель'),
-    ]
-    user_type = forms.ChoiceField(required=True, choices=user_types)
 
     class Meta():
         model = UserProfileInfo
         fields = ('bio', 'profile_pic', 'user_type')
 
-        labels = {
-            'user_type': 'тип студента',
-        }
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfileInfo
+        fields = ['bio', 'profile_pic']
+
+
+class ProfileForm2(forms.ModelForm):
+    class Meta():
+        model = User
+        fields = ('first_name',
+                  'email')

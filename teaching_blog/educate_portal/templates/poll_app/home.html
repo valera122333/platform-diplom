@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Доступные опросы{% endblock %}
+
+
+{% block image_block %}
+  <header class="info-header">
+    <div id="page-intro" class="container-fluid d-flex align-items-center justify-content-center ">
+      <div class="row d-flex justify-content-center text-center">
+        <div class="col-6 text-white">
+          <!-- heading -->
+          <h2 class="display-4 font-weight-bold  p-5 " style="color:#ff5722;" > Доступные опросы   </h2>
+          <div class="row d-flex justify-content-center text-center">
+            <ul class="breadcrumb">
+              <li><a href="{% url 'index' %}">Главная</a></li>
+              <li><a href="{% url 'educate_portal:standard_list' %}">Образовательный портал</a></li>
+              <li class="disabled-text" >Опросы</li>
+            </ul>
+          </div>
+
+          <!-- divider -->
+          <hr style="color:#ff5722;">
+
+          <!-- description -->
+          <h4 class="white-text my-4">На данной странице вы можете проголосовать на любой понравившийся вам вопрос, с дальнейшем администрация веб-сайта примет соответсвующее решение!</h4>
+    </div>
+  </header>
+  {% endblock %}
+
+
+{% block content %}
+
+<div class="row col-12 mb-3">
+    <div class="col-lg-6 col-lg-offset-2 container-fluid mt-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+     
+            </div>
+                
+            <ul class="list-group">
+                {% for poll in polls %} 
+                
+                <li class="list-group-item">
+                    <strong>{{poll.question}}</strong>
+                    <br>
+                    <div class="btn-group mt-3">
+                        <a href="{% url 'educate_portal:vote_poll' poll.id %}" class="btn btn-info btn-xs">Подробнее</a> &nbsp;
+                        <a href="{% url 'educate_portal:results_poll' poll.id %}" class="btn btn-primary btn-xs">Итоги опроса</a> &nbsp;
+                    </span>
+                </li>
+                {% endfor %}
+                 
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<style>
+ 
+</style>
+{% endblock %}
+
+
+ 

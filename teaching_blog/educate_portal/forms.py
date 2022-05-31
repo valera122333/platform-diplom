@@ -1,11 +1,15 @@
 from django import forms
+from .models import Poll
+from django.forms import ModelForm
+
 from .models import Comment, Homework, Notes, Reply, Lesson, Todo
 
 
 class LessonForm(forms.ModelForm):
     class Meta:
         model = Lesson
-        fields = ('lesson_id', 'name', 'position', 'video', 'ppt', 'Notes')
+        fields = ('name', 'position', 'slug', 'description',
+                  'description2', 'video', 'ppt', 'Notes')
 
 
 class CommentForm(forms.ModelForm):
@@ -62,3 +66,9 @@ class TodoForm(forms.ModelForm):
     class Meta:
         model = Todo
         fields = ['title', 'is_finished']
+
+
+class CreatePollForm(ModelForm):
+    class Meta:
+        model = Poll
+        fields = ['question', 'option_one', 'option_two', 'option_three']

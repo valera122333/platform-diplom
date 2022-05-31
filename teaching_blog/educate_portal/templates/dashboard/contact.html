@@ -60,9 +60,15 @@
               <div class="form-group">
                 <textarea name="subject" class="form-control" required placeholder="Опишите примерно какая у вас задача *" style="width: 100%; height: 150px;"></textarea>
             </div>
+            {% if user.is_authenticated %}
               <div class="form-group my-3">
                   <input type="submit" name="btnSubmit" class="btnContact btn btn-primary" value="Отправить" />
               </div>
+              {% else %}
+              <p class='text-danger'>Зарегистрируйтесь или войдите для отправления обращения</p>
+                                <a href="{% url 'user_login' %}" class="btn btn-primary" style="">Войти</a>
+                                <a href="{% url 'register' %}" class="btn btn-primary" style="">Зарегистрироваться</a>
+                                {%endif%}
           </div>
          
       </div>

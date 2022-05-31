@@ -41,4 +41,9 @@ urlpatterns = [
 
     path('wikipedia', views.wiki, name='wiki'),
 
+    path('home_poll', views.home_poll, name='home_poll'),
+    path('create_poll', views.create_poll, name='create_poll'),
+    path('vote/<poll_id>', views.vote_poll, name='vote_poll'),
+    path('results/<poll_id>', views.results_poll, name='results_poll'),
+
 ]

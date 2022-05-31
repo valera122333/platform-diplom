@@ -44,11 +44,11 @@
 
                   {% csrf_token %}
                   <div class="center container">
-                    <div class="row col-9  ">
+                    <div class="row col-12  ">
 
 
                   <label for="username">Логин:</label>
-                  <input type="text" name="username" placeholder="Username" class="form-control">
+                  <input type="text" name="username" placeholder="Логин" class="form-control">
 
                   <label for="password">Пароль:</label>
                   <input type="password" name="password" class="form-control">
@@ -58,7 +58,9 @@
                     </button></div>
                   </div>
                   <div class="row justify-content-center">
-                   
+                    {% for message in messages %}
+                    <h4 class="mt-2 text-primary">{{ message }}</h4>
+                    {% endfor %}
                   </div>
                   
                   </div>

@@ -28,56 +28,31 @@
   {% endblock %}
 
   {% block content %}
-  <section id="best-features" class="text-center">
-                <h2 class="mb-5 mt-5 font-weight-bold" style="color:#ff5722;">Разделы категорий программирования</h2>
-                <!-- class row for description-->
-                <div class="row d-flex justify-content-center mb-4">
-                  <!-- class column -->
-                  <div class="col-md-8 mb-5">
-                    <p class="grey-text">В каждом разделе вас ждут уроки и интересные задачи, советуем изучать все по порядку!</p>
-                 
-                  </div>
-                </div>
-              
+ 
             
 
-
-                {% comment %} <div class="row align-items-stretch g-4 py-5 container-fluid">
-       
-
+                <section class="text-center">
+                  <h2 class="mb-5 font-weight-bold" style="color:#ff5722;">Разделы категорий программирования</h2>
+                  <!-- class row for description-->
+                  <div class="row d-flex justify-content-center mb-4">
+                    <!-- class column -->
+                    <div class="col-md-8">
+                      <p class="grey-text">В каждом разделе вас ждут уроки и интересные задачи, советуем изучать все по порядку!
                 
-                  {% for subject in standards.subjects.all %}
-                  <div class=" col-4">
-                      <div class=" ">
-                          <img style='width:180px;height:180px;' src="{{subject.image.url|default_if_none:'#'}}" class="card-img-top" />
-              
-                          <div class="card-body ">
-              
-                            <h4 class="card-title" style="color:#ff5722;">{{subject.name}}</h4>
-                              <p>{{subject.description }}</p>
-                              <a href="{% url 'educate_portal:lesson_list' slug=subject.slug standard=standards.slug %}"><button class="button-les"> <span> Изучать</span></button></a>
-                               
-                          </div>
-                      </div>
+                        </p>
+                    </div>
                   </div>
-                  {% endfor %}
-              </div>
-               
-              </div>
-
-            </div> {% endcomment %}
-        
-
+             
 
  
             <div class="row my-4 text-center  ">
               {% for subject in standards.subjects.all %}
-              <div class="col-md-3 p-4">
-                <h2>{{ subject.name }}</h2>
+              <div class="col-md-4 p-4">
+                <h5>{{ subject.name }}</h2>
                 
-                  <div class="card bg-black ">
+                  <div class="  bg-black ">
                       <img  src="{{subject.image.url }}" class="card-img-top" />
-                      <a href="{% url 'educate_portal:lesson_list' slug=subject.slug standard=standards.slug %}"><button class="button-les"> <span> Изучать</span></button></a>
+                      <a href="{% url 'educate_portal:lesson_list' slug=subject.slug standard=standards.slug %}"><button class="button-les btn-primary"> <span> Изучать</span></button></a>
                       <h4>{{ subject.description }}</h4>
                       <div class="card-body text-start"  >
           

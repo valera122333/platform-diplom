@@ -1,0 +1,55 @@
+{% extends 'base.html' %} 
+ 
+{% load crispy_forms_tags %}
+
+{% block title %}Редактор профиля{% endblock title %}
+{% block content %}
+<header class="info-header">
+  <div id="page-intro" class="container-fluid d-flex align-items-center justify-content-center ">
+    <div class="row d-flex justify-content-center text-center">
+      <div class="col-md-10 text-white">
+   
+        <h2 class="display-4 font-weight-bold  p-5 " style="color:#ff5722;" >Ваш профиль пользователя {{request.user.username }}</h2>
+        <div class="row d-flex justify-content-center text-center">
+          <ul class="breadcrumb">
+            <li><a href="{% url 'index' %}">Главная</a></li>
+            <li><a href="{% url 'educate_portal:standard_list' %}">Образовательный портал</a></li>
+            
+            <li class="disabled-text" >профиль пользователя {{request.user.username }}</li>
+         
+          </ul>
+        </div>
+
+ 
+        <hr style="color:#ff5722;">
+
+  
+        <h4 class="white-text my-4">В своем профиле вы можете изменить информацию о себе или картинку</h4>
+  </div>
+</header>
+<h4 class="text-center mt-3">Добро пожаловать {{request.user.first_name }} !</h4>
+<h4 class="text-center mt-3">Редактирование профиля</h4>
+ 
+ 
+<form class='col-7 center container' method="post" enctype="multipart/form-data">
+  <h3>Ваши данные</h3>
+  {% csrf_token %}
+  {{ form|crispy }}
+  {{user_form|crispy}}
+  <button href="" class="btn btn-outline-info" type="submit">
+    Изменить
+  </button></div>
+  <div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="form-group">
+     
+ 
+  </div>
+  </div>
+</form>   
+
+
+
+
+        
+{% endblock content %}
